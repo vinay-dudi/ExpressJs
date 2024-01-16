@@ -1,0 +1,183 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "REST API for Swagger Documentation",
+      "version": "1.0.0"
+    },
+    "schemes": ["http"],
+    "servers": [{ "url":"http://localhost:8082/"}],
+    "paths": {
+      "/user/register": {
+        "post": {
+          "tags": ["Authentication"],
+          "summary": "Register a new user",
+          "description": "Register a new user with the provided username and password.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationSchema"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegistrationResponseSchema"
+                  }
+                }
+              }
+            },
+            "400": { "description": "Bad request, check the request body" },
+            "500": { "description": "Internal server error" }
+          }
+        }
+      },
+      "/user/login": {
+        "post": {
+          "tags": ["Authentication"],
+          "summary": "Login a user",
+          "description": "Login a user with the provided username and password.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSchema"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Logged in",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LoginResponseSchema"
+                  }
+                }
+              }
+            },
+            "400": { "description": "Incorrect Password or Unauthorized login" },
+            "500": { "description": "Internal server error" }
+          }
+        }
+      },
+      "/api/upload":{
+        "post":{
+            "tags": ["Authentication"],
+          "summary": "  To upload a file",
+          "description": "It contains the file choosing and button also",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadSchema"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "File uploaded successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UploadSchema"
+                  }
+                }
+              }
+            },
+            "400": { "description": "Failed to upload" }
+         
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "RegistrationSchema": {
+          "required": ["username", "password"],
+          "properties": {
+            "user_name": {
+              "type": "string",
+              "example": "Vinay"
+            },
+            "user_password": {
+              "type": "string",
+              "example": "Vinay@10"
+            },
+            "user_age": {
+              "type": "Number",
+              "example": "10"
+            },
+            "user_id": {
+              "type": "Number",
+              "example": "01"
+            }
+          }
+        },
+        "RegistrationResponseSchema": {
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "User successfully registered"
+            }
+          }
+        },
+        "LoginSchema": {
+          "required": ["user_name", "user_password","user_age","user_id"],
+          "properties": {
+            "user_name": {
+              "type": "string",
+              "example": "Vinay"
+            },
+            "user_password": {
+              "type": "string",
+              "example": "Vinay@10"
+            },
+            "user_id": {
+              "type": "Number",
+              "example": "01"
+            },
+            "user_age": {
+              "type": "Number",
+              "example": "20"
+            }
+          }
+        },
+        "LoginResponseSchema": {
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "User successfully logged in"
+            }
+          }
+        },
+          "UploadSchema": {
+            "required": ["file"],
+            "properties": {
+              "username": {
+                "type": "file",
+                "example": "img1.jpg"
+              }
+            }
+          },
+          "UploadResponseSchema": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Uploaded Sucessfully"
+              }
+            }
+          }
+      }
+    }
+  }
